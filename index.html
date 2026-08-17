@@ -645,16 +645,12 @@
 
   // ---- Auth wiring ----
   async function atlasLogin() {
-    const email = window.prompt("Enter your email for a magic sign-in link:");
-    if (!email) return;
-    const { error } = await supabaseClient.auth.signInWithOtp({
-      email: email,
-      options: { emailRedirectTo: window.location.href }
+    const { error } = await supabaseClient.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: window.location.href }
     });
     if (error) {
       alert(error.message);
-    } else {
-      alert("Check your email for a sign-in link.");
     }
   }
 
