@@ -203,6 +203,13 @@
     font-weight:800;font-size:12px;padding:2px 8px;border-radius:999px;
   }
   .thumb .big-emoji{font-size:44px;line-height:1;}
+  .thumb .thumb-img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+    transition:transform .25s ease;
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .card:hover .thumb-img{transform:scale(1.04);}
+  }
   .card .meta{padding:14px 16px 16px;}
   .card h3{margin:0;font-size:16px;line-height:1.35;}
   .card .play-hint{margin:6px 0 0;font-size:13px;font-weight:800;color:var(--red);}
@@ -417,18 +424,18 @@
   var CHANNEL = "https://www.youtube.com/@Fortambo";
 
   var longform = [
-    {n:1,  icon:"👀", cls:"t2", title:"I got noticed by Technoblade", url:"https://www.youtube.com/watch?v=CyN8_yXYDZI",                  views:"6.5K views"},
-    {n:2,  icon:"🔤", cls:"t3", title:"Minecraft Letter Hunt...", url:"https://www.youtube.com/watch?v=VDe1Q6QEWos",                      views:"2.8K views"},
-    {n:3,  icon:"🍩", cls:"t1", title:"I got EVERY Block on the DonutSMP...", url:"https://www.youtube.com/watch?v=Pndpu4BCNlo",          views:"2.4K views"},
-    {n:4,  icon:"🚩", cls:"t2", title:"I Got EVERY FLAG in Minecraft...", url:"https://www.youtube.com/watch?v=O50st2wMBBI",              views:"2.3K views"},
-    {n:5,  icon:"⚔️", cls:"t3", title:"I am NOT a Boosted HT4...", url:"https://www.youtube.com/watch?v=TA3CfP-Ca3I",                     views:"1.9K views"},
-    {n:6,  icon:"🔥", cls:"t1", title:"Minecraft's Hardest Challenge...", url:"https://www.youtube.com/watch?v=LguHK7JqoGA",              views:"1.5K views"},
-    {n:7,  icon:"🧊", cls:"t2", title:"Can You Beat Minecraft in 100 Chunks?", url:"https://www.youtube.com/watch?v=lGyn9z39JjY",         views:"1.5K views"}
+    {n:1,  icon:"👀", cls:"t2", title:"I got noticed by Technoblade", vid:"CyN8_yXYDZI", url:"https://www.youtube.com/watch?v=CyN8_yXYDZI",                  views:"6.5K views"},
+    {n:2,  icon:"🔤", cls:"t3", title:"Minecraft Letter Hunt...", vid:"VDe1Q6QEWos", url:"https://www.youtube.com/watch?v=VDe1Q6QEWos",                      views:"2.8K views"},
+    {n:3,  icon:"🍩", cls:"t1", title:"I got EVERY Block on the DonutSMP...", vid:"Pndpu4BCNlo", url:"https://www.youtube.com/watch?v=Pndpu4BCNlo",          views:"2.4K views"},
+    {n:4,  icon:"🚩", cls:"t2", title:"I Got EVERY FLAG in Minecraft...", vid:"O50st2wMBBI", url:"https://www.youtube.com/watch?v=O50st2wMBBI",              views:"2.3K views"},
+    {n:5,  icon:"⚔️", cls:"t3", title:"I am NOT a Boosted HT4...", vid:"TA3CfP-Ca3I", url:"https://www.youtube.com/watch?v=TA3CfP-Ca3I",                     views:"1.9K views"},
+    {n:6,  icon:"🔥", cls:"t1", title:"Minecraft's Hardest Challenge...", vid:"LguHK7JqoGA", url:"https://www.youtube.com/watch?v=LguHK7JqoGA",              views:"1.5K views"},
+    {n:7,  icon:"🧊", cls:"t2", title:"Can You Beat Minecraft in 100 Chunks?", vid:"lGyn9z39JjY", url:"https://www.youtube.com/watch?v=lGyn9z39JjY",         views:"1.5K views"}
   ];
   var shorts = [
-    {icon:"😱", title:"POV: you only have 1 way to survive...", url:"https://www.youtube.com/shorts/j0ti0DhzBr0", views:"33K views"},
-    {icon:"💀", title:"sybau twin", url:"https://www.youtube.com/shorts/HgQIVwgbS08",                              views:"30K views"},
-    {icon:"📆", title:"Day 2 of SWAG-TMV", url:"https://www.youtube.com/shorts/VxptAQzzfzA",                       views:"16K views"}
+    {icon:"😱", title:"POV: you only have 1 way to survive...", vid:"j0ti0DhzBr0", url:"https://www.youtube.com/shorts/j0ti0DhzBr0", views:"33K views"},
+    {icon:"💀", title:"sybau twin", vid:"HgQIVwgbS08", url:"https://www.youtube.com/shorts/HgQIVwgbS08",                              views:"30K views"},
+    {icon:"📆", title:"Day 2 of SWAG-TMV", vid:"VxptAQzzfzA", url:"https://www.youtube.com/shorts/VxptAQzzfzA",                       views:"16K views"}
   ];
 
   var LEVELS = [
@@ -580,9 +587,20 @@
     a.href = item.url || CHANNEL;
     a.target = "_blank";
     a.rel = "noopener";
-    a.setAttribute("aria-label", item.title + " (" + item.views + ") - watch on the Fortambo channel");
+    a.setAttribute("aria-label", item.title + " (" + item.views + ") - watch on YouTube");
     var thumb = document.createElement("div");
     thumb.className = "thumb " + (item.cls || (isShort ? "t3" : "t1"));
+    if(item.vid){
+      var im = document.createElement("img");
+      im.className = "thumb-img";
+      im.src = "https://i.ytimg.com/vi/" + item.vid + "/hqdefault.jpg";
+      im.alt = "";
+      im.loading = "lazy";
+      im.decoding = "async";
+      im.setAttribute("aria-hidden", "true");
+      im.onerror = function(){ this.style.display = "none"; };
+      thumb.appendChild(im);
+    }
     if(!isShort){
       var rb = document.createElement("span");
       rb.className = "rank-badge";
