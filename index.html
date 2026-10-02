@@ -679,7 +679,7 @@
   function renderCrownMsg(){
     if(state.crowns === 0) msgEl.textContent = "psst. the crown is clickable.";
     else if(state.crowns < 10) msgEl.textContent = "keep going...";
-    else msgEl.textContent = "the crown believes in you.";
+    else msgEl.textContent = "click the big crown up there…";
   }
   $("crownBtn").addEventListener("click", function(ev){
     state.crowns += 1;
