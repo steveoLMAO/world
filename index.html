@@ -219,7 +219,7 @@
     box-shadow:0 8px 0 var(--red-dark);
   }
   .grind-box .day-label{font-weight:800;letter-spacing:.16em;text-transform:uppercase;font-size:13px;opacity:.85;}
-  .grind-box .day-num{font-size:clamp(64px,14vw,110px);font-weight:900;line-height:1;margin:6px 0;}
+  .grind-box .day-num{font-size:clamp(64px,14vw,110px);font-weight:900;line-height:1;margin:6px auto;}
   .grind-box p{margin:0 auto;max-width:520px;font-weight:600;}
   .grind-box .legacy{margin-top:14px;font-size:14px;opacity:.85;font-weight:700;}
 
@@ -417,18 +417,18 @@
   var CHANNEL = "https://www.youtube.com/@Fortambo";
 
   var longform = [
-    {n:1,  icon:"👀", cls:"t2", title:"I got noticed by Technoblade",                  views:"6.5K views"},
-    {n:2,  icon:"🔤", cls:"t3", title:"Minecraft Letter Hunt...",                      views:"2.8K views"},
-    {n:3,  icon:"🍩", cls:"t1", title:"I got EVERY Block on the DonutSMP...",          views:"2.4K views"},
-    {n:4,  icon:"🚩", cls:"t2", title:"I Got EVERY FLAG in Minecraft...",              views:"2.3K views"},
-    {n:5,  icon:"⚔️", cls:"t3", title:"I am NOT a Boosted HT4...",                     views:"1.9K views"},
-    {n:6,  icon:"🔥", cls:"t1", title:"Minecraft's Hardest Challenge...",              views:"1.5K views"},
-    {n:7,  icon:"🧊", cls:"t2", title:"Can You Beat Minecraft in 100 Chunks?",         views:"1.5K views"}
+    {n:1,  icon:"👀", cls:"t2", title:"I got noticed by Technoblade", url:"https://www.youtube.com/watch?v=CyN8_yXYDZI",                  views:"6.5K views"},
+    {n:2,  icon:"🔤", cls:"t3", title:"Minecraft Letter Hunt...", url:"https://www.youtube.com/watch?v=VDe1Q6QEWos",                      views:"2.8K views"},
+    {n:3,  icon:"🍩", cls:"t1", title:"I got EVERY Block on the DonutSMP...", url:"https://www.youtube.com/watch?v=Pndpu4BCNlo",          views:"2.4K views"},
+    {n:4,  icon:"🚩", cls:"t2", title:"I Got EVERY FLAG in Minecraft...", url:"https://www.youtube.com/watch?v=O50st2wMBBI",              views:"2.3K views"},
+    {n:5,  icon:"⚔️", cls:"t3", title:"I am NOT a Boosted HT4...", url:"https://www.youtube.com/watch?v=TA3CfP-Ca3I",                     views:"1.9K views"},
+    {n:6,  icon:"🔥", cls:"t1", title:"Minecraft's Hardest Challenge...", url:"https://www.youtube.com/watch?v=LguHK7JqoGA",              views:"1.5K views"},
+    {n:7,  icon:"🧊", cls:"t2", title:"Can You Beat Minecraft in 100 Chunks?", url:"https://www.youtube.com/watch?v=lGyn9z39JjY",         views:"1.5K views"}
   ];
   var shorts = [
-    {icon:"😱", title:"POV: you only have 1 way to survive...", views:"33K views"},
-    {icon:"💀", title:"sybau twin",                              views:"30K views"},
-    {icon:"📆", title:"Day 2 of SWAG-TMV",                       views:"16K views"}
+    {icon:"😱", title:"POV: you only have 1 way to survive...", url:"https://www.youtube.com/shorts/j0ti0DhzBr0", views:"33K views"},
+    {icon:"💀", title:"sybau twin", url:"https://www.youtube.com/shorts/HgQIVwgbS08",                              views:"30K views"},
+    {icon:"📆", title:"Day 2 of SWAG-TMV", url:"https://www.youtube.com/shorts/VxptAQzzfzA",                       views:"16K views"}
   ];
 
   var LEVELS = [
@@ -577,7 +577,7 @@
   function makeCard(item, isShort){
     var a = document.createElement("a");
     a.className = "card";
-    a.href = CHANNEL;
+    a.href = item.url || CHANNEL;
     a.target = "_blank";
     a.rel = "noopener";
     a.setAttribute("aria-label", item.title + " (" + item.views + ") - watch on the Fortambo channel");
@@ -636,7 +636,7 @@
         result.innerHTML = "";
         var pre = document.createTextNode("Fate says: ");
         var link = document.createElement("a");
-        link.href = CHANNEL;
+        var vidMatch=null;for(var i=0;i<longform.length;i++){if(longform[i].title===pick){vidMatch=longform[i];break;}}link.href=(vidMatch&&vidMatch.url)||CHANNEL;
         link.target = "_blank";
         link.rel = "noopener";
         link.textContent = pick;
